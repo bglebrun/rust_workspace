@@ -31,7 +31,7 @@ unsafe fn fast_inv_sqrt(x: f32) -> f32 {
 pub fn test_sqrt(x:f32) {
 
     let control_time = Instant::now();
-    let control = 1.0 / f32::sqrt(x);
+    let control = f32::sqrt(x).inv();
     let test_elapsed = control_time.elapsed();
     println!("Control Answer {:.32}", control);
     println!("Control: {:.2?}", test_elapsed);
