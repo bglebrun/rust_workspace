@@ -17,12 +17,6 @@ fn fast_inv_sqrt(x: f32) -> f32 {
     j*(1.5-(0.5*x)*j*j)
 }
 
-// only compile this block if the target architecture is x86 or x86_64
-unsafe fn experimental_rsqrt(x: __m128 ) -> f32 {
-    let res = _mm_rsqrt_ps(x);
-    _mm_cvtss_f32(res)
-}
-
 pub fn test_sqrt(x:f32) {
 
     let now = Instant::now();
@@ -47,8 +41,9 @@ pub fn test_sqrt(x:f32) {
     unsafe {
         let lock_n_load = _mm_set_ps(0.0, 0.0, 0.0, x);
         let now = Instant::now();
-        let est = experimental_rsqrt(lock_n_load);
+        let unsafe_est = _mm_rsqrt_ps(lock_n_load);
         let elapsed = now.elapsed();
+        let est = _mm_cvtss_f32(unsafe_est);
         println!("Answer unsafe {:.32}", est);
         println!("Elapsed unsafe: {:.2?}", elapsed);
         // precision of calculated values vs control
