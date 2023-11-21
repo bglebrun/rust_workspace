@@ -1,0 +1,20 @@
+*.swp
+/target
+**/*.rs.bk
+.DS_Store
+*.pdb
+rust-project.json
+.idea
+.vscode/*
+!.vscode/settings.json
+*.iml
+*.o
+public/
+.direnv/
+
+
+# Added by cargo
+#
+# already existing elements were commented out
+
+#/target
