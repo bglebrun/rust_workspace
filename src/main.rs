@@ -1,5 +1,5 @@
 // import sqrt.rs
-mod sqrt;
+mod inv_sqrt;
 
 fn main() {
     // get command line arguments
@@ -19,5 +19,5 @@ fn main() {
     }
     // output architecture
     println!("Target architecture: {}", std::env::consts::ARCH);
-    sqrt::test_sqrt(x);
+    inv_sqrt::test_sqrt(x);
 }
