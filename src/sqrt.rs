@@ -8,6 +8,15 @@ use std::arch::arm::*;
 #[cfg(target_arch = "aarch64")]
 use std::arch::aarch64::*;
 
+// error estimation macro
+macro_rules! error {
+    ($est:expr, $control:expr) => {
+        let error = ($est - $control).abs() / $control;
+        let error_percentage = format!("{:.2}", error*100.0);
+        println!("Error: {} %", error_percentage);
+    };
+}
+
 use std::{time::Instant, mem};
 
 // you will never beat a half century of compiler optimizations and chip development
@@ -33,10 +42,7 @@ pub fn test_sqrt(x:f32) {
         let elapsed = now.elapsed();
         println!("Answer {:.32}", est);
         println!("Elapsed: {:.2?}", elapsed);
-
-        let precision = est - control/est;
-        let precision_percentage = format!("{:.2}", precision.abs()*100.0);
-        println!("Precision fast_sqrt: {} %", precision_percentage);
+        error!(est, control);
     }
     
     // only compile this block if the target architecture is x86 or x86_64
@@ -50,8 +56,6 @@ pub fn test_sqrt(x:f32) {
         println!("Answer unsafe {:.32}", est);
         println!("Elapsed unsafe: {:.2?}", elapsed);
         // precision of calculated values vs control
-        let precision = est - control/est;
-        let precision_percentage = format!("{:.2}", precision.abs()*100.0);
-        println!("Precision intrinsic: {} %", precision_percentage);
+        error!(est, control);
     }
 }
