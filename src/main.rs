@@ -1,4 +1,3 @@
-// import sqrt.rs
 mod inv_sqrt;
 
 fn main() {
@@ -21,3 +20,4 @@ fn main() {
     println!("Target architecture: {}", std::env::consts::ARCH);
     inv_sqrt::test_sqrt(x);
 }
+
